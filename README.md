@@ -6,3 +6,6 @@ Dependensies (Python and Django):
 pip install django
 
 brew install python3
+
+
+(Add Player Button on home page is under repair)
