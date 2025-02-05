@@ -1,0 +1,207 @@
+{% extends "home/index.html" %}
+{%block main %}
+<main>
+  <head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://unpkg.com/chartist-plugin-axistitle"></script>
+    <script src="https://unpkg.com/chartist-plugin-threshold"></script>
+    <script src="https://unpkg.com/chartist-plugin-legend"></script>
+  </head>
+
+  <style>
+
+    .ct-label {
+      font-size: 10px
+    }
+
+    .ct-series-a .ct-line, .ct-series-a .ct-point { /* Changes player 1 color */
+      stroke: rgb(207, 152, 0);
+    }
+
+    .ct-series-b .ct-line, .ct-series-b .ct-point { /* Changes player 2 color */
+      stroke: rgb(140, 85, 172);
+    }
+
+    /* .ct-line.ct-threshold-above, .ct-point.ct-threshold-above, .ct-bar.ct-threshold-above {
+      stroke: #59922b;
+    }
+
+    .ct-line.ct-threshold-below, .ct-point.ct-threshold-below, .ct-bar.ct-threshold-below {
+      stroke: #f05b4f;
+    } */
+
+    .ct-area.ct-threshold-above {
+      fill: #59922b;
+    }
+
+    .ct-area.ct-threshold-below {
+      fill: #f05b4f;
+    }
+
+  </style>
+
+  <html>
+  <h1>Graphs</h1>
+    {% if not stat %}
+      {% include "graphs/player_select.html" %}
+    {% else %}
+      {% include "graphs/player_select.html" %}
+      {% if player2 %}
+        <div class="container">
+          <div class="col-lg jumbotron text-center">
+            <h2>{{ player1 }} vs {{ player2 }} - {{ stat }}</h2>
+            <p>
+              <svg width="10" height="10">
+                <rect width="10" height="10" style="fill:rgb(207, 152, 0);stroke-width:1;stroke:rgb(0,0,0)" />
+              </svg>
+              <small>{{ player1 }} </small>
+              <svg width="10" height="10">
+                <rect width="10" height="10" style="fill:rgb(140, 85, 172);stroke-width:1;stroke:rgb(0,0,0)" />
+              </svg>
+              <small>{{ player2 }}</small>
+            </p>
+            <div class="ct-chart ct-perfect-fourth", id="bar"></div>
+            <a href="/stats/" class="btn btn-primary">Stats</a>
+          </div>
+        </div>
+      {% else %}
+        <div class="container">
+          <div class="col-lg jumbotron text-center">
+            <h2>{{ player1 }} - {{ stat }}</h2>
+            <p>
+              <svg width="10" height="10">
+                <rect width="10" height="10" style="fill:rgb(207, 152, 0);stroke-width:1;stroke:rgb(0,0,0)" />
+              </svg>
+              <small>{{ player1 }}</small>
+            </p>
+            <div class="ct-chart ct-perfect-fourth", id="bar"></div>
+            <a href="/stats/" class="btn btn-primary">Stats</a>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+  </html>
+
+  {% if player2 %}
+  <script>
+  var thresh = JSON.parse("{{stat_average|escapejs}}")
+  var data = {
+    // labels: ["1/2", "1/3", "1/6", "1/7", "2/2", "2/3", "2/4", "3/3", "3/2", "3/3"],
+    series: [
+      JSON.parse("{{stat1_data|escapejs}}"),
+      JSON.parse("{{stat2_data|escapejs}}"),
+    ]
+  };
+
+  var options = {
+    chartPadding: {
+      top: 0,
+      right: 20,
+      bottom: 10,
+      left: 15
+    },
+
+    showArea: true,
+
+    axisY: {
+      onlyInteger: true
+    },
+
+    plugins: [
+      Chartist.plugins.ctThreshold({ // Used to determine above or below NBA average
+        threshold: thresh
+      }),
+      Chartist.plugins.ctAxisTitle({
+        axisX: {
+          axisTitle: 'Recent Games',
+          axisClass: 'ct-axis-title',
+          offset: {
+            x: -20,
+            y: 30
+          },
+          textAnchor: 'middle'
+        },
+        axisY: {
+          axisTitle: 'Total',
+          axisClass: 'ct-axis-title',
+          offset: {
+            x: 0,
+            y: -10
+          },
+          textAnchor: 'middle',
+          flipTitle: false
+        }
+      }),
+      // Chartist.plugins.legend({
+        // legendNames: [JSON.parse("{{player1|escapejs}}"), 'Second'],
+        // className: 'crazyPink'
+      // })
+    ]
+  };
+
+  new Chartist.Line('#bar', data, options)
+
+  </script>
+  {% else %}
+  <script>
+    var thresh = JSON.parse("{{stat_average|escapejs}}")
+    var data = {
+      // labels: ["1/2", "1/3", "1/6", "1/7", "2/2", "2/3", "2/4", "3/3", "3/2", "3/3"],
+      series: [
+        JSON.parse("{{stat1_data|escapejs}}"),
+      ]
+    };
+  
+    var options = {
+      chartPadding: {
+        top: 0,
+        right: 20,
+        bottom: 10,
+        left: 15
+      },
+  
+      showArea: true,
+  
+      axisY: {
+        onlyInteger: true
+      },
+  
+      plugins: [
+        Chartist.plugins.ctThreshold({ // Used to determine above or below NBA average
+          threshold: thresh
+        }),
+        Chartist.plugins.ctAxisTitle({
+          axisX: {
+            axisTitle: 'Recent Games',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: -20,
+              y: 30
+            },
+            textAnchor: 'middle'
+          },
+          axisY: {
+            axisTitle: 'Total',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: -10
+            },
+            textAnchor: 'middle',
+            flipTitle: false
+          }
+        }),
+        // Chartist.plugins.legend({
+          // legendNames: [JSON.parse("{{player1|escapejs}}"), 'Second'],
+          // className: 'crazyPink'
+        // })
+      ]
+    };
+  
+    new Chartist.Line('#bar', data, options)
+  
+    </script>
+  {% endif %}
+</main>
+{% endblock main %}

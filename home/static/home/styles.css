@@ -1,0 +1,77 @@
+main {
+    padding: 10px;
+}
+
+nav {
+    background-color: #1d428a;
+    color: #e4c7c7;
+    padding-bottom: 10px;
+}
+
+nav h1 {
+    margin: 4px 0 15px 0;
+    color: white;
+}
+
+nav a, nav a:visited {
+    margin-right: 20px;
+    color: #e4c7c7;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.active {
+    color: white;
+}
+
+#signInButton {
+    border: 2px solid #e4c7c7;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.leaderboard {
+    margin: 25px 0 25px 0;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+.leaderboard h2 {
+    margin: 0px;
+}
+
+.leaderboard table {
+    width: 100%;
+}
+
+.leaderboard tr {
+    border-bottom: 1px solid black;
+}
+
+.loginBox {
+    padding: 70px 0;
+    text-align: center;
+}
+
+.formSettings {
+    text-align: left;
+}
+
+.game {
+    margin: 25px 0 25px 0;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+.game table {
+    width: 100%;
+}

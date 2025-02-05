@@ -1,0 +1,201 @@
+{% extends "home/index.html" %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href={% static 'stats/player-stat.css' %}>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+{% endblock %}
+{%block main %}
+<main>
+  <h1>Player Stats</h1>
+  <div class = "search">
+    <div class="form-row">
+      <form method="POST">
+      {% csrf_token %}
+      <div class="form-group col-md-6">
+        <label for="playerName">Player Name:</label>
+        <input id="playerName" class="form-control" list="suggestions" name="playerName" placeholder="Kevin Durant">
+        <datalist id="suggestions">
+        {% for p in players %}
+            <option value="{{ p }}">
+        {% endfor %}
+        </datalist>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">Sort By:</label>
+        <select id="inputState" class="form-control" name = "sortStat">
+          <option selected>Choose Stat...</option>
+          <option>pts</option>
+          <option>fanp</option>
+          <option>mp</option>
+          <option>fg</option>
+          <option>fga</option>
+          <option>fgp</option>
+          <option>tp</option>
+          <option>tpa</option>
+          <option>tpp</option>
+          <option>ft</option>
+          <option>fta</option>
+          <option>ftp</option>
+          <option>orb</option>
+          <option>drb</option>
+          <option>rrb</option>
+          <option>ast</option>
+          <option>stl</option>
+          <option>blk</option>
+          <option>tov</option>
+          <option>pf</option>
+        </select>
+      </div>
+      <button class="btn btn-outline-success my-2 my-sm-0 searchBox" type="submit" name = "searchPlayer">Search</button>  
+      </form>
+    </div>
+  </div>
+
+  {% for p in player_stats %}
+    <div class="panel panel-default">
+      <div class="panel-heading container-fluid">
+        <div class = "row playerBox">
+          <div class = "col col-lg-1 addCheck player">
+            <input type="checkbox" name = "addPlayer">
+          </div>
+          <div class = "col col-lg-2 player">
+            <span>{{p.name}}</span>
+          </div>
+          <div class = "col col-lg-2">
+            <div class = "statCol">
+              <h4>FG</h4>
+              <div class = "statNum">{{p.fg__avg|floatformat}}</div>
+            </div>
+          </div>
+          <div class = "col col-lg-2">
+            <div class = "statCol">
+              <h4>3P</h4>
+              <div class = "statNum">{{p.tp__avg|floatformat}}</div>
+            </div>
+          </div>
+          <div class = "col col-lg-2">
+            <div class = "statCol">
+              <h4>AST</h4>
+              <div class = "statNum">{{p.ast__avg|floatformat}}</div>
+            </div>
+          </div>
+          <div class = "col col-lg-1">
+            <div class = "statCol">
+              <h4>TRB</h4>
+              <div class = "statNum">{{p.trb__avg|floatformat}}</div>
+            </div>
+          </div>
+          <div class = "col col-lg-1 expandConstract" align = "right" onclick = "expandConstract(this)">
+            <i class="bi bi-arrows-angle-expand"></i>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body panel-close">
+        <div class = "row">
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>PTS</h3>
+            <div class = "statNum">{{p.pts__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>FANP</h3>
+            <div class = "statNum">{{p.fanp__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>MP</h3>
+            <div class = "statNum">{{p.mp__avg}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>FGA</h3>
+            <div class = "statNum">{{p.fga__avg|floatformat}}</div>
+          </div> 
+      </div>
+      <div class = "col col-lg-2">
+        <div class = "statCol">
+          <h3>FGP</h3>
+          <div class = "statNum">{{p.fgp__avg|floatformat}}</div>
+        </div> 
+      </div>
+      <div class = "col col-lg-2">
+        <div class = "statCol">
+          <h3>3PA</h3>
+          <div class = "statNum">{{p.tpa__avg|floatformat}}</div>
+        </div> 
+      </div>
+      </div>
+      <div class = "row">
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>3PP</h3>
+            <div class = "statNum">{{p.tpp__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>FT</h3>
+            <div class = "statNum">{{p.ft__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>FTA</h3>
+            <div class = "statNum">{{p.fta__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>FTP</h3>
+            <div class = "statNum">{{p.ftp__avg|floatformat}}</div>
+          </div> 
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>ORB</h3>
+            <div class = "statNum">{{p.orb__avg|floatformat}}</div>
+          </div> 
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>DRB</h3>
+            <div class = "statNum">{{p.drb__avg|floatformat}}</div>
+          </div> 
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>STL</h3>
+            <div class = "statNum">{{p.stl__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>BLK</h3>
+            <div class = "statNum">{{p.blk__avg|floatformat}}</div>
+          </div>
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>TOV</h3>
+            <div class = "statNum">{{p.tov__avg|floatformat}}</div>
+          </div> 
+        </div>
+        <div class = "col col-lg-2">
+          <div class = "statCol">
+            <h3>PF</h3>
+            <div class = "statNum">{{p.pf__avg|floatformat}}</div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</main>
+<script src= {% static 'stats/player-stat.js' %}></script>
+{% endblock main %}

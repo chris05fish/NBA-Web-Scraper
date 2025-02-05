@@ -1,0 +1,34 @@
+</p>Enter a player or two and choose a stat to evaluate.</p>
+<form method="POST" action="/graphs/">{% csrf_token %}
+    <input id="player1" list="suggestions" name="player1" placeholder="Dwight Howard">
+    <datalist id="suggestions">
+    {% for p in players_data %}
+        <option value="{{ p }}">
+    {% endfor %}
+    </datalist>
+    <input id="player2" list="suggestions" name="player2" placeholder="Jordan McLaughlin">
+    <datalist id="suggestions">
+    {% for p in players_data %}
+        <option value="{{ p }}">
+    {% endfor %}
+    </datalist>
+    <select name="stat">
+        <option disabled selected> -- Choose a Stat -- </option>
+        {% include "graphs/stats_select.html" %}
+    </select>
+    <input type="submit" class="btn btn-primary" value="Choose Stat"/>
+</form>
+
+<form method="POST" action="/graphs/">{% csrf_token %}
+    <input id="player1" list="suggestions" name="player1" placeholder="Stephen Curry">
+    <datalist id="suggestions">
+    {% for p in players_data %}
+        <option value="{{ p }}">
+    {% endfor %}
+    </datalist>
+    <select name="stat">
+        <option disabled selected> -- Choose a Stat -- </option>
+        {% include "graphs/stats_select.html" %}
+    </select>
+    <input type="submit" class="btn btn-primary" value="Choose Stat"/>
+</form>

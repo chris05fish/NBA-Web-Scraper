@@ -1,0 +1,89 @@
+{% extends "home/index.html" %}
+{%block main %}
+<main>
+  <span class = "col-md-9">
+    {% if user.is_authenticated %}
+    <div class = "leaderboard">
+      <h2>Your Players</h2>
+      <table class="table table-striped" border="1">
+        <tr>
+          {% include "home/header3.html" %}
+        </tr>
+          {% for player in shooters %}
+            <tr> <!-- Row 8 & Y Header -->
+            {% for id, value in player.items %}
+              <td id="{{id}}">{{value}}</td>
+            {% endfor %}
+            </tr>
+          {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+      <div class = "leaderboard">
+          <h2>Top Shooters</h2>
+          <table class="table table-striped" border="1">
+            <tr>
+              {% include "home/header.html" %}
+            </tr>
+              {% for player in shooters %}
+                <tr> <!-- Row 8 & Y Header -->
+                {% for id, value in player.items %}
+                  <td id="{{id}}">{{value}}</td>
+                {% endfor %}
+                </tr>
+              {% endfor %}
+          </table>
+      </div>
+
+      <div class = "leaderboard">
+          <h2>Top Defenders</h2>
+          <table class="table table-striped" border="1">
+            <tr>
+            {% include "home/header2.html" %}
+            </tr>
+              {% for player in defenders %}
+                <tr> <!-- Row 8 & Y Header -->
+                {% for id, value in player.items %}
+                  <td id="{{id}}">{{value}}</td>
+                {% endfor %}
+                </tr>
+              {% endfor %}
+          </table>
+      </div>
+  </span>
+
+  <span class = "col-md-3" style = "border-left:solid black 2px; margin-top:10px; margin-bottom: 10px;">
+    {% if user.is_authenticated %}
+    <h2>Your Players' Recent Games</h2>
+    <div class = "game">
+      <table>
+        <tr>
+          <th>Teams</th>
+          <th>Score</th>
+        </tr>
+        <tr>
+          <td>GSW vs POR</td>
+          <td>201-110</td>
+        </tr>
+      </table>
+    </div>
+    {% endif %}
+    <h2>Recent Games</h3>
+      <div class = "game">
+          <table>
+            <tr>
+              <th>Teams</th>
+              <th>Score</th>
+            </tr>
+            <tr>
+              <td>GSW vs POR</td>
+              <td>201-110</td>
+            </tr>
+          </table>
+      </div>
+  </span>
+  <div>
+    <a href="/players/" class="btn btn-primary">Add Player</a>
+  </div>
+</main>
+{% endblock main %}

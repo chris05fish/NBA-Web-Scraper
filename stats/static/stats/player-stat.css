@@ -1,0 +1,42 @@
+.playerBox {
+    font-size: 20px;
+}
+
+.player {
+    line-height: 60px;
+}
+
+.addCheck {
+    margin-left: 15px;
+}
+
+.panel {
+    width: 98%;
+    margin: auto;
+    margin-bottom: 15px;
+}
+
+.statCol {
+    font-size: 16px;
+    margin: auto;
+}
+
+.panel-close {
+    display: none;
+}
+
+.panel-open {
+    display: block;
+}
+
+.expandConstract {
+    cursor: pointer;
+}
+
+.search {
+    margin-bottom: 30px;
+}
+
+.searchBox {
+    margin-top: 25px;
+}

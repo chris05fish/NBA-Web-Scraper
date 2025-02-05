@@ -1,0 +1,21 @@
+{% extends "home/index.html" %}
+{%block main %}
+<div class = "loginBox">
+<form method = "POST">
+	{% csrf_token %}
+	<h2>Create an Account</h2>
+	<h3 class = "formSetting">{{ account_form.username.label_tag }}</h3>
+	<p>{{ account_form.username }}</p>
+	<h3 class = "formSetting">{{ account_form.email.label_tag }}</h3>
+	<p>{{ account_form.email }}</p>
+	<h3 class = "formSetting">{{ account_form.password.label_tag }}</h3>
+	<p>{{ account_form.password }}</p>	
+
+	<div>
+		<button type ="submit">Sign Up</button>
+	</div>
+</form>
+<div>
+	<small>Already Have an Account? <a href = "/login">Sign In</a></small>
+</div>
+{% endblock main %}
